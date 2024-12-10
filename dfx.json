@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "noteKeeper_backend": {
+      "main": "src/noteKeeper_backend/main.mo",
+      "type": "motoko"
+    },
+    "noteKeeper_frontend": {
+      "dependencies": [
+        "noteKeeper_backend"
+      ],
+      "source": [
+        "src/noteKeeper_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "noteKeeper_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
