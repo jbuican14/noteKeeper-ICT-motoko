@@ -14,7 +14,7 @@ function App() {
   function addNote(newNote) {
     setNotes(prevNotes => {
       noteKeeper_backend.createNote(newNote.title, newNote.content)
-      return [...prevNotes, newNote];
+      return [newNote, ...prevNotes];
     });
   }
 
@@ -30,6 +30,7 @@ function App() {
 
   function deleteNote(id) {
     setNotes(prevNotes => {
+      noteKeeper_backend.removeNote(id)
       return prevNotes.filter((noteItem, index) => {
         return index !== id;
       });
