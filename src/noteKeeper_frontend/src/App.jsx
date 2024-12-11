@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
@@ -16,6 +16,16 @@ function App() {
       noteKeeper_backend.createNote(newNote.title, newNote.content)
       return [...prevNotes, newNote];
     });
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    //because async we need to await 
+    const notesArray = await noteKeeper_backend.readNotes();
+    setNotes(notesArray)
   }
 
   function deleteNote(id) {
