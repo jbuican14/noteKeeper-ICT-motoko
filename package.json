@@ -14,5 +14,12 @@
   "type": "module",
   "workspaces": [
     "src/noteKeeper_frontend"
-  ]
+  ],
+  "dependencies": {
+    "@material-ui/core": "^4.6.1",
+    "@material-ui/icons": "^4.5.1"
+  },
+  "devDependencies": {
+    "sass": "^1.82.0"
+  }
 }

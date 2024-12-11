@@ -1,30 +1,48 @@
 import { useState } from 'react';
-import { noteKeeper_backend } from 'declarations/noteKeeper_backend';
+import Header from "./Header";
+import Footer from "./Footer";
+import Note from "./Note";
+import CreateArea from "./CreateArea";
+// dont delete this -- to access backend 
+// import { noteKeeper_backend } from 'declarations/noteKeeper_backend';
+import { noteKeeper_backend } from '../../declarations/noteKeeper_backend';
+import styles from './Styles.module.css'
 
 function App() {
-  const [greeting, setGreeting] = useState('');
+  const [notes, setNotes] = useState([]);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    noteKeeper_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
+  function addNote(newNote) {
+    setNotes(prevNotes => {
+      noteKeeper_backend.createNote(newNote.title, newNote.content)
+      return [...prevNotes, newNote];
     });
-    return false;
+  }
+
+  function deleteNote(id) {
+    setNotes(prevNotes => {
+      return prevNotes.filter((noteItem, index) => {
+        return index !== id;
+      });
+    });
   }
 
   return (
-    <main>
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
-    </main>
+    <div className={styles.body}>
+      <Header />
+      <CreateArea onAdd={addNote} />
+      {notes.map((noteItem, index) => {
+        return (
+          <Note
+            key={index}
+            id={index}
+            title={noteItem.title}
+            content={noteItem.content}
+            onDelete={deleteNote}
+          />
+        );
+      })}
+      <Footer />
+    </div>
   );
 }
 
